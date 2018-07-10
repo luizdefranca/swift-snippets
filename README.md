@@ -44,3 +44,8 @@ cell.layer.addSublayer(right_border)
 cell.layer.addSublayer(left_border)
 cell.layer.addSublayer(top_border)
 ```
+
+###### Add button to navigation bar
+```swift
+navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchWithAddresss))
+```
