@@ -49,3 +49,28 @@ cell.layer.addSublayer(top_border)
 ```swift
 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchWithAddresss))
 ```
+
+###### Convert google map location to image !
+```swift
+let Width = 100
+let Height = 200
+
+let mapImageUrl = "https://maps.googleapis.com/maps/api/staticmap?center="
+let latlong = "\(lat), \(lon)"
+
+let mapUrl  = mapImageUrl + latlong
+
+let size = "&size=" +  "\(Int(Width))" + "x" +  "\(Int(Height))"
+let positionOnMap = "&markers=size:mid|color:red|" + latlong
+let staticImageUrl = mapUrl + size + positionOnMap
+
+let url = URL(string: staticImageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
+
+do {
+    let data = try NSData(contentsOf: url!, options: NSData.ReadingOptions())
+    mapImage.image = UIImage(data: data as Data)
+} catch {
+    mapImage.image = UIImage()
+}
+```
+
