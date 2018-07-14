@@ -52,25 +52,30 @@ navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search
 
 ###### Convert google map location to image !
 ```swift
-let Width = 100
-let Height = 200
-
-let mapImageUrl = "https://maps.googleapis.com/maps/api/staticmap?center="
-let latlong = "\(lat), \(lon)"
-
-let mapUrl  = mapImageUrl + latlong
-
-let size = "&size=" +  "\(Int(Width))" + "x" +  "\(Int(Height))"
-let positionOnMap = "&markers=size:mid|color:red|" + latlong
-let staticImageUrl = mapUrl + size + positionOnMap
-
-let url = URL(string: staticImageUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
-
-do {
-    let data = try NSData(contentsOf: url!, options: NSData.ReadingOptions())
-    mapImage.image = UIImage(data: data as Data)
-} catch {
-    mapImage.image = UIImage()
+extension UIImageView {
+    func downloadedFrom(url: URL, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        contentMode = mode
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() {
+                self.image = image
+            }
+            }.resume()
+    }
+    func downloadedFrom(link: String, contentMode mode: UIViewContentMode = .scaleAspectFit) {
+        guard let url = URL(string: link) else { return }
+        downloadedFrom(url: url, contentMode: mode)
+    }
 }
+
+let mapUrl = "https://maps.googleapis.com/maps/api/staticmap?center=\(String(describing: favoriteLocation.lat)),\(String(describing: favoriteLocation.lon))&zoom=17&size=400x200"
+        
+mapImage.image = UIImage(named: "logo-gray")
+mapImage.downloadedFrom(link: mapUrl)
 ```
 
