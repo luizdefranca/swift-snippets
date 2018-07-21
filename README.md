@@ -79,3 +79,40 @@ mapImage.image = UIImage(named: "logo-gray")
 mapImage.downloadedFrom(link: mapUrl)
 ```
 
+###### NSError usage
+```swift
+class Helper {
+
+    static let errorDomain = "com.example.error"
+    static let errorFuncKey = "com.example.error.function"
+    static let errorFileKey = "com.example.error.file"
+    static let errorLineKey = "com.example.error.line"
+
+    static func error(_ message: String, record: Bool = true, function: String = #function, file: String = #file, line: Int = #line) -> NSError {
+
+        let customError = NSError(domain: errorDomain, code: 0, userInfo: [
+            NSLocalizedDescriptionKey: message,
+            errorFuncKey: function,
+            errorFileKey: file,
+            errorLineKey: line
+        ])
+
+        // if (record) {
+        //     customError.record()
+        // }
+
+        return customError
+    }
+}
+
+let error = Helper.error(NSLocalizedString("Unauthorized", comment: "Account not activated"))
+
+extension NSError {
+
+    func record() {
+        Crashlytics.sharedInstance().recordError(self)
+    }
+
+}
+
+```
