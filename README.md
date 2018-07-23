@@ -116,3 +116,8 @@ extension NSError {
 }
 
 ```
+
+###### Realm file path
+```swift
+Realm.Configuration.defaultConfiguration.fileURL
+```
