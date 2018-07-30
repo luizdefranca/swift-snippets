@@ -121,3 +121,16 @@ extension NSError {
 ```swift
 Realm.Configuration.defaultConfiguration.fileURL
 ```
+
+###### Use another ruby version 
+```
+I had to do the following
+
+sudo xcode-select --install
+Install rbenv with brew install rbenv
+Add eval "$(rbenv init -)" to the end of ~/.zshrc or ~/.bash_profile
+Install a ruby version rbenv install 2.3.0
+Select a ruby version by rbenv rbenv global 2.3.0
+Open a new terminal window
+Verify that the right gem folder is being used with gem env home (should report something in your user folder not system wide)
+```
