@@ -182,3 +182,11 @@ marker.icon = generatePin(avatar: "farid")
 //            m.isDraggable = true
 //            m.groundAnchor = CGPoint(x: 0.5, y: 0.5)
 ```
+
+###### Border radius
+```swift
+view.clipsToBounds = true
+view.layer.cornerRadius = 30
+view.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner, .layerMaxXMinYCorner]
+                           // top right           // bottom right       // bottom left        // top left
+```
