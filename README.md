@@ -122,15 +122,23 @@ extension NSError {
 Realm.Configuration.defaultConfiguration.fileURL
 ```
 
-###### Use another ruby version 
-```
-I had to do the following
+###### Merge two image to one
+```swift
+func generatePin(avatar: String) -> UIImage {
+    let bottomImage = UIImage(named: avatar)
+    let frontImage = UIImage (named: "userMarker")
+    let size = CGSize(width: 90, height: 90)
 
-sudo xcode-select --install
-Install rbenv with brew install rbenv
-Add eval "$(rbenv init -)" to the end of ~/.zshrc or ~/.bash_profile
-Install a ruby version rbenv install 2.3.0
-Select a ruby version by rbenv rbenv global 2.3.0
-Open a new terminal window
-Verify that the right gem folder is being used with gem env home (should report something in your user folder not system wide)
+    UIGraphicsBeginImageContextWithOptions(size, false, 0)
+    let areaSize = CGRect(x: 35, y: 13, width: 42, height: 42)
+    let frontImageSize = CGRect(x: 14, y: 3, width: 84, height: 84)
+    bottomImage!.draw(in: areaSize, blendMode: CGBlendMode.normal, alpha:  1.0)
+    frontImage!.draw(in: frontImageSize, blendMode: CGBlendMode.normal, alpha: 1.0)
+    let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+    UIGraphicsEndImageContext()
+
+    return newImage
+}
+
+marker.icon = generatePin(avatar: "farid")
 ```
