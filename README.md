@@ -190,3 +190,5 @@ view.layer.cornerRadius = 30
 view.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner, .layerMaxXMinYCorner]
                            // top right           // bottom right       // bottom left        // top left
 ```
+
+cgcolor for border !
