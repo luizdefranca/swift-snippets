@@ -191,4 +191,35 @@ view.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner, .layerMi
                            // top right           // bottom right       // bottom left        // top left
 ```
 
+###### Socket IO
+```swift
+let manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:3000")!, config: [.log(false), .compress])
+    
+var socket: SocketIOClient! = nil
+
+
+override func viewDidLoad() {
+    super.viewDidLoad()
+
+    self.socket = manager.defaultSocket
+
+    socket.on(clientEvent: .connect) {data, ack in
+        print("connected")
+    }
+
+    socket.on(clientEvent: .disconnect) {data, ack in
+        print("WebSocket connection closed.")
+    }
+
+    socket.connect()
+
+    socket.on("chat message") {data, ack in
+        if let value = data.first as? String {
+            print(value)
+        }
+    }
+
+}
+```
+
 cgcolor for border !
