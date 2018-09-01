@@ -276,4 +276,34 @@ http.listen(port, function(){
 </html>
 ```
 
-cgcolor for border !
+###### Hexagon ImageView
+```swift
+let notificationContainer: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1.0)
+    view.frame = CGRect(x: 0, y: 0, width: 120, height: 120)
+    view.alpha = 0.9
+    setupHexagonImageView(view: view)
+
+    return view
+}()
+
+internal static func setupHexagonImageView(view: UIView) {
+    let lineWidth: CGFloat = 0
+    let path = Helper.roundedPolygonPath(rect: view.bounds, lineWidth: lineWidth, sides: 6, cornerRadius: 10, rotationOffset: CGFloat(Double.pi / 2.0))
+
+    let mask = CAShapeLayer()
+    mask.path = path.cgPath
+    mask.lineWidth = lineWidth
+    mask.strokeColor = UIColor.clear.cgColor
+    mask.fillColor = UIColor.white.cgColor
+    view.layer.mask = mask
+
+    let border = CAShapeLayer()
+    border.path = path.cgPath
+    border.lineWidth = lineWidth
+    border.strokeColor = UIColor.white.cgColor
+    border.fillColor = UIColor.clear.cgColor
+    view.layer.addSublayer(border)
+}
+```
