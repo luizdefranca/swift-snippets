@@ -307,3 +307,9 @@ internal static func setupHexagonImageView(view: UIView) {
     view.layer.addSublayer(border)
 }
 ```
+
+###### Print json data
+```swift
+let string = String(data: jsonData, encoding: String.Encoding.utf8) ?? "Data could not be printed"
+print(string)
+```
