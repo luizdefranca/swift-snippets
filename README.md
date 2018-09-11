@@ -357,3 +357,25 @@ internal static func roundedPolygonPath(rect: CGRect, lineWidth: CGFloat, sides:
 let string = String(data: jsonData, encoding: String.Encoding.utf8) ?? "Data could not be printed"
 print(string)
 ```
+
+###### Iran phone mask
+```swift
+func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    let separator = "-"
+    let filler = "#"
+    if var number = textField.text, string != "" {
+        number = number.replacingOccurrences(of: separator, with: "")
+        number = number.replacingOccurrences(of: filler, with: "")
+        if number.count == 10 { return false }
+        number += string
+        while number.count < 10 { number += "#" }
+        number.insert("-", at: number.index(number.startIndex,
+                                            offsetBy: 6))
+        number.insert("-", at: number.index(number.startIndex,
+                                            offsetBy: 3))
+        textField.text = number.convertToPersian()
+    }
+    return false
+}
+
+```
