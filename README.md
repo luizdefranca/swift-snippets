@@ -379,3 +379,25 @@ func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange
 }
 
 ```
+
+###### GCD
+```swift
+func background(work: @escaping () -> ()) {
+    DispatchQueue.global(qos: .userInitiated).async {
+        work()
+    }
+}
+
+func main(work: @escaping () -> ()) {
+    DispatchQueue.main.async {
+        work()
+    }
+}
+
+background {
+     //background job
+     main {
+       //update UI (or what you need to do in main thread)
+     }
+}
+```
